@@ -1,0 +1,36 @@
+[
+   {
+      "topic":"love",
+      "patterns":[
+         "love",
+         "loving",
+         "amour"
+      ],
+      "phrases":[
+         "Words of love you whisper soft and true",
+         "The kiss my lover brings",
+         "I give her all my love",
+         "I know this love of mine"
+      ]
+   },
+   {
+      "topic":"hate",
+      "patterns":[
+         "hate",
+         "dislike",
+         "pain"
+      ],
+      "phrases":[
+         "I thought that you would realize",
+         "That if I ran away from you",
+         "That you would want me too",
+         "But I got a big surprise",
+         "Oh ho, oh ho, oh"
+      ]
+   }
+]
+
+
+
+
+
