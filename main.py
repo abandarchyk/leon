@@ -1,5 +1,6 @@
 import os
 import re
+import random
 
 
 all_lines = []
@@ -15,25 +16,32 @@ def load_data():
         all_lines.extend(song_in_lines)
 
 
-def check_line(pattern, test_line: str):
-    print('...Checking pattern: ' + pattern + ' in line: ' + test_line)
-    match = re.search(pattern, test_line, re.IGNORECASE)
-    if match is not None:
-        return True
-    return False
+def find_lines(pattern):
+    results = {}
+    for current_line in all_lines:
+        match = re.search(pattern, current_line, re.IGNORECASE)
+        if match is not None:
+            results[match] = current_line
+            print(results)
+    return results
 
 
-def complete_line(match, test_line):
-    res = test_line
+def reply_for_matched(match, source_line):
     start_index = match.start()
     if start_index is 0:
         end_index = match.end()
-        res = test_line[end_index: len(test_line)]
-    return res
+        source_line = ' ..' + source_line[end_index: len(source_line)]
+    return source_line
 
 
-def make_reply(input: str):
-#get match
+
+def make_reply(user_input: str):
+    pattern = r'\b' + user_input + r'\b'
+
+
+
+
+
 #if 0 - complete
 #if not 0 - whole string
     # if match is None
@@ -49,12 +57,20 @@ while True:
     if user_input == 'stop':
         break
     pat = r'\b' + user_input + r'\b'
-    isFound = False;
-    for current_line in all_lines:
-        isFound = check_line(pat, current_line)
-        if isFound:
-            bot_reply = complete_line(matcher, current_line)
-            break
+    results = find_lines(pat)
+    reply = 'Not Found'
+    if len(results) > 0:
+        rnd_match = random.choice(list(results))
+        rnd_value = results.get(rnd_match)
+        reply = reply_for_matched(rnd_match, rnd_value)
+#    elif len(results) is 0:
+#        print('Not found')
+#   prepare_intelletual_reply
+    print('bot:')
+    print(reply)
+
+
+
 
 
 
