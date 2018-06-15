@@ -16,6 +16,18 @@ def load_data():
         all_lines.extend(song_in_lines)
 
 
+def process_into_pattern(user_input: str):
+    words = user_input.split()
+    with_regex = [word + '[\\s|,|.|-]*' for word in words]
+    print('intermediate list')
+    print(with_regex)
+    concatenated_pattern = str.join('', with_regex)
+    wrapped = r'\b' + concatenated_pattern + r'\b'
+    print("final Result")
+    print(wrapped)
+    return wrapped
+
+
 def find_lines(pattern):
     results = {}
     for current_line in all_lines:
@@ -39,9 +51,6 @@ def make_reply(user_input: str):
     pattern = r'\b' + user_input + r'\b'
 
 
-
-
-
 #if 0 - complete
 #if not 0 - whole string
     # if match is None
@@ -56,7 +65,7 @@ while True:
     user_input = input()
     if user_input == 'stop':
         break
-    pat = r'\b' + user_input + r'\b'
+    pat = process_into_pattern(user_input)
     results = find_lines(pat)
     reply = 'Not Found'
     if len(results) > 0:

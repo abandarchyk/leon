@@ -1,39 +1,41 @@
 import re
 
-
-lines = []
-
-
-def load_data():
-    file = open('data/songs/debug', mode='r', encoding='utf-8')
-    song_in_lines = file.readlines()
-    lines.extend(song_in_lines)
+lines = ['Того, кого не стоило бы ждать', 'hop-hei!', 'la-la-lei']
 
 
-def check_line(pattern, test_line: str):
-    print('Checking pattern: ' + pattern + ' in line: ' + test_line)
-    match = re.search(pattern, test_line)
-    return match
+def process_into_pattern(input: str):
+    words = input.split()
+    with_regex = [word + '[\\s|,|.|-]*' for word in words]
+    print('intermediate list')
+    print(with_regex)
+    concatenated_pattern = str.join('', with_regex)
+    wrapped = r'\b' + concatenated_pattern + r'\b'
+    print("final Result")
+    print(wrapped)
+    return wrapped
 
 
-def complete_line(match, test_line):
-    if match is not None:
-        start_index = match.start()
-        if start_index is 0:
-            end_index = match.end()
-            new_line = test_line[end_index: len(test_line)]
-            print(new_line)
-        else:
-            print(test_line)
+def find_lines(pattern):
+    results = {}
+    for current_line in lines:
+        match = re.search(pattern, current_line, re.IGNORECASE)
+        if match is not None:
+            results[match] = current_line
+            print(results)
+    return results
 
 
-load_data()
-for current_line in lines:
-    user_input = 'она любила'
-    pat = r'\b' + user_input + r'\b'
-    match_result = check_line(pat, current_line)
-    print(match_result)
-    complete_line(match_result, current_line)
+while True:
+    user_input = input()
+    pat = process_into_pattern(user_input)
+    find_lines(pat)
+
+
+
+
+
+
+
 
 
 
