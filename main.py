@@ -69,7 +69,12 @@ while True:
     results = find_lines(pat)
     reply = 'Not Found'
     if len(results) > 0:
-        rnd_match = random.choice(list(results))
+        f = [match for match in list(results) if match.start() is 0]
+        w = [match for match in list(results) if match.start() is not 0]
+        if len(f) > 0:
+            rnd_match = random.choice(list(f))
+        else:
+            rnd_match = random.choice(list(w))
         rnd_value = results.get(rnd_match)
         reply = reply_for_matched(rnd_match, rnd_value)
 #    elif len(results) is 0:
