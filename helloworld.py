@@ -1,4 +1,5 @@
 import re
+import httptransport
 
 lines = ['Того, кого не стоило бы ждать', 'hop-hei!', 'la-la-lei']
 
@@ -25,10 +26,13 @@ def find_lines(pattern):
     return results
 
 
+
+
 while True:
     user_input = input()
-    pat = process_into_pattern(user_input)
-    find_lines(pat)
+    httpe = httptransport.HttpEndpoint()
+    res = httpe.http_get('https://vk.com')
+
 
 
 
