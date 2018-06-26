@@ -1,0 +1,2 @@
+class SystemProperties:
+    id = ''

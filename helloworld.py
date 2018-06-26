@@ -1,7 +1,10 @@
 import re
 import httptransport
+import sys
+import utils
 
 lines = ['Того, кого не стоило бы ждать', 'hop-hei!', 'la-la-lei']
+props = utils.SystemProperties()
 
 
 def process_into_pattern(input: str):
@@ -26,12 +29,20 @@ def find_lines(pattern):
     return results
 
 
+def read_commandline_args():
+    for param in sys.argv:
+        print('current param is: ' + param)
+        if 'id=' in param:
+            bid = param[len('id='): len(param)]
+            props.id = bid
 
 
+read_commandline_args()
 while True:
     user_input = input()
-    httpe = httptransport.HttpEndpoint()
-    res = httpe.http_get('https://vk.com')
+    res = httptransport.Endpoint(props.id).http_get('/some_url')
+
+
 
 
 
