@@ -7,7 +7,7 @@ class Endpoint:
     base_url = ''
 
     def __init__(self, bid):
-        self.base_url = 'https://lalala/' + bid + '/other_stuff'
+        self.base_url = 'https://api.telegram.org/bot' + bid + '/'
 
     def http_get(self, url: str):
             print('HTTP GET: ' + self.base_url + url)

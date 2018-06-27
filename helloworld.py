@@ -1,10 +1,8 @@
 import json
-import httptransport
-import sys
-import utils
+import telegram.api
 
 lines = ['Того, кого не стоило бы ждать', 'hop-hei!', 'la-la-lei']
-props = utils.SystemProperties()
+
 
 
 file = open('scheme', mode='r', encoding='utf-8')
@@ -12,18 +10,11 @@ pyth_obj = json.loads(file.read())
 print(pyth_obj['result'][0]['update_id'])
 
 
-def read_commandline_args():
-    for param in sys.argv:
-        print('current param is: ' + param)
-        if 'id=' in param:
-            bid = param[len('id='): len(param)]
-            props.id = bid
 
 
-read_commandline_args()
 while True:
     user_input = input()
-    res = httptransport.Endpoint(props.id).http_get('/some_url')
+    res = telegram.api.get_updates()
 
 
 
