@@ -1,4 +1,4 @@
-import re
+import json
 import httptransport
 import sys
 import utils
@@ -7,26 +7,9 @@ lines = ['Того, кого не стоило бы ждать', 'hop-hei!', 'la
 props = utils.SystemProperties()
 
 
-def process_into_pattern(input: str):
-    words = input.split()
-    with_regex = [word + '[\\s|,|.|-]*' for word in words]
-    print('intermediate list')
-    print(with_regex)
-    concatenated_pattern = str.join('', with_regex)
-    wrapped = r'\b' + concatenated_pattern + r'\b'
-    print("final Result")
-    print(wrapped)
-    return wrapped
-
-
-def find_lines(pattern):
-    results = {}
-    for current_line in lines:
-        match = re.search(pattern, current_line, re.IGNORECASE)
-        if match is not None:
-            results[match] = current_line
-            print(results)
-    return results
+file = open('scheme', mode='r', encoding='utf-8')
+pyth_obj = json.loads(file.read())
+print(pyth_obj['result'][0]['update_id'])
 
 
 def read_commandline_args():
