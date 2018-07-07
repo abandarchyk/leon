@@ -12,6 +12,10 @@ file = open('scheme', mode='r', encoding='utf-8')
 pyth_obj = json.loads(file.read())
 
 
+def extract_updates(response: json):
+    print()
+
+
 def extract_data(updates_response: json):
     results = updates_response['result']
     for result in results:
