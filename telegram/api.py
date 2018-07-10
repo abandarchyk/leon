@@ -1,7 +1,7 @@
 import httptransport
 import utils
 
-print('pizdec')
+
 props = utils.SystemProperties()
 http_endpoint = httptransport.Endpoint(props.id)
 

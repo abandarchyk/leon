@@ -2,39 +2,34 @@ import json
 import telegram.api
 import random
 import time
+import utils
 
 lines = ['Хоп-хей, ла-ла-лэй!', 'Где вопросы, где ответ?', 'Что ни говори', 'То ли верить то ли нет',
          'Но Бог тебя хранит']
 chats = []
+updates = []
 
 
 file = open('scheme', mode='r', encoding='utf-8')
-pyth_obj = json.loads(file.read())
+s = file.read()
 
 
-def extract_updates(response: json):
-    print()
-
-
-def extract_data(updates_response: json):
-    results = updates_response['result']
-    for result in results:
-        target_chat_id = result['message']['chat']['id']
-        chats.append(target_chat_id)
-    lastupdate = results[len(results)-1]['update_id']
-    return lastupdate
-
-
-offset = 0
 
 while True:
     time.sleep(2)
-    res = telegram.api.get_updates(offset+1)
-    asJson = res.json()
-    if len(asJson['result']) > 0:
-            offset = extract_data(asJson)
-            index = random.randint(0, len(lines) - 1)
-            telegram.api.send_message(chats.pop(0), lines[index])
+#   res = telegram.api.get_updates(offset+1)
+#   asJson = res.json()
+    updates = utils.decode_updates(json.loads(s))
+
+    for update in updates:
+
+        user_chat = update.Message.Chat.id
+        user_text = update.Message.text
+        # make reply
+        reply = ''
+        telegram.api.send_message(user_chat, reply)
+        offset = update.update_id + 1
+
 
 
 
