@@ -68,36 +68,40 @@ while True:
     #   user_input = input()
 
     time.sleep(2)
-    res = telegram.api.get_updates(offset+1)
+    res = telegram.api.get_updates(offset)
     asJson = res.json()
 
     updates = utils.decode_updates(asJson)
 
-    for update in updates:
-        user_chat = update.Message.Chat.id
-        user_input = update.Message.text
+    if len(updates) > 0:
+        for update in updates:
+            user_chat = update.Message.Chat.id
+            user_input = update.Message.text
 
-        if user_input == 'stop':
-            break
-        pat = process_into_pattern(user_input)
-        results = find_lines(pat)
-        reply = 'Not Found'
-        if len(results) > 0:
-            f = [match for match in list(results) if match.start() is 0]
-            w = [match for match in list(results) if match.start() is not 0]
-            if len(f) > 0:
-                rnd_match = random.choice(list(f))
-            else:
-                rnd_match = random.choice(list(w))
-            rnd_value = results.get(rnd_match)
-            reply = reply_for_matched(rnd_match, rnd_value)
-        #    elif len(results) is 0:
-        #        print('Not found')
-        #   prepare_intellectual_reply
-        print('LOG: bot reply:')
-        print(reply)
-        telegram.api.send_message(user_chat, reply)
+            if user_input == 'stop':
+                break
+            pat = process_into_pattern(user_input)
+            results = find_lines(pat)
+            reply = 'Not Found'
+            if len(results) > 0:
+                f = [match for match in list(results) if match.start() is 0]
+                w = [match for match in list(results) if match.start() is not 0]
+                if len(f) > 0:
+                    rnd_match = random.choice(list(f))
+                else:
+                    rnd_match = random.choice(list(w))
+                rnd_value = results.get(rnd_match)
+                reply = reply_for_matched(rnd_match, rnd_value)
+            #    elif len(results) is 0:
+            #        print('Not found')
+            #   prepare_intellectual_reply
+            print('LOG: bot reply:')
+            print(reply)
+            telegram.api.send_message(user_chat, reply)
         offset = update.update_id + 1
+    else:
+        continue
+
 
 
 
