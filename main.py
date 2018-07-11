@@ -4,6 +4,7 @@ import random
 import time
 import telegram.api
 import utils
+import sys
 
 all_lines = []
 
@@ -79,7 +80,8 @@ while True:
             user_input = update.Message.text
 
             if user_input == 'stop':
-                break
+                sys.exit('Code word is given')
+            # complete phrase
             pat = process_into_pattern(user_input)
             results = find_lines(pat)
             reply = 'Not Found'
